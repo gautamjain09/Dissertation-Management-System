@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row my-4">
+    <h1 class="display-6">{{ 'Student.CreateReservation.Header' | translate }}</h1>
+  </div>
+
+  <div *ngIf="form && thesis" class="row py-3">
+    <app-error-alert *ngIf="isErrorVisible" class="mb-2"></app-error-alert>
+    <app-warning-alert *ngIf="!(canReserve ?? true)" class="mb-2"
+                       messageKey="Alert.Warning.Student.CannotCreateReservation">
+    </app-warning-alert>
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="topic" class="form-label">{{ 'Form.Label.ThesisTopic' | translate }}</label>
+        <input type="text" formControlName="topic" id="topic" class="form-control">
+      </div>
+      <div class="row mb-3">
+        <div class="col-7">
+          <label for="supervisor" class="form-label">{{ 'Form.Label.Supervisor' | translate }}</label>
+          <input type="text" formControlName="supervisor" id="supervisor" class="form-control">
+        </div>
+        <div class="col-5">
+          <label for="diplomaSession" class="form-label">{{ 'Form.Label.DiplomaSession' | translate }}</label>
+          <input type="text" formControlName="diplomaSession" id="diplomaSession" class="form-control">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">{{ 'Form.Label.Students' | translate }}</label>
+        <app-error-alert *ngIf="notUniqueStudents" class="mb-2" messageKey="Alert.Error.NotUniqueStudents">
+        </app-error-alert>
+        <div class="row">
+          <div class="col-7">
+            <input type="text" formControlName="initiator" class="form-control">
+          </div>
+          <div class="col-5">
+            <button class="btn btn-primary" aria-hidden="true"
+                    [disabled]="!canAddNextStudent()"
+                    (click)="addStudentFormGroup()">
+              <span class="bi bi-plus-square"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="studentsForm.controls.length > 0" formArrayName="students">
+        <div *ngFor="let control of studentsForm.controls; let i = index; let last = last;" class="row mb-3">
+          <div class="col-7">
+            <select [formControlName]="i" class="form-control">
+              <option *ngFor="let item of students" [value]="item.id">{{ LabelBuilder.forStudent(item) }}</option>
+            </select>
+            <app-validation-feedback [errors]="getErrorsFromArray(studentsForm, i)"></app-validation-feedback>
+          </div>
+          <div class="col-5">
+            <button class="btn btn-danger" aria-hidden="true" (click)="removeStudentControl(i)">
+              <span class="bi bi-trash"></span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-4">
+        <label for="description" class="form-label">{{ 'Form.Label.Description' | translate }}</label>
+        <textarea rows="5" formControlName="description" id="description" class="form-control"></textarea>
+      </div>
+      <div class="gap-2 d-flex justify-content-end">
+        <button
+          type="submit" class="btn btn-success"
+          [disabled]="form!.invalid || !canReserve || notUniqueStudents"
+          (click)="confirm()">
+          {{ 'Button.Approve' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

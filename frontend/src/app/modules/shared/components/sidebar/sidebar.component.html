@@ -1,0 +1,15 @@
+<h4 class="my-3 ps-3 text-white">{{ 'Sidebar.Menu' | translate}}</h4>
+
+<ul class="nav-pills ms-0 ps-3">
+  <li *ngFor="let item of navItems">
+    <a [routerLink]="item.path" routerLinkActive="active" class="nav-link ps-3">
+      <h6>{{ item.nameKey | translate }}</h6>
+    </a>
+  </li>
+</ul>
+
+<h6 class="ps-3 my-2">
+  <a (click)="logout()" role="button" class="text-white text-decoration-none">
+    {{ 'Sidebar.SingOut' | translate }}
+  </a>
+</h6>

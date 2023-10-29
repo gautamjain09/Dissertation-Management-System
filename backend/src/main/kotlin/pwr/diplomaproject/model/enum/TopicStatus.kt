@@ -1,0 +1,12 @@
+package pwr.diplomaproject.model.enum
+
+enum class TopicStatus {
+    WAITING,
+    PROPOSED_BY_STUDENT,
+    REJECTED_BY_LECTURER,
+    REJECTED_BY_COORDINATOR,
+    APPROVED_BY_COORDINATOR,
+    TO_CORRECT,
+    REJECTED_BY_COMMITTEE,
+    APPROVED_BY_COMMITTEE
+}

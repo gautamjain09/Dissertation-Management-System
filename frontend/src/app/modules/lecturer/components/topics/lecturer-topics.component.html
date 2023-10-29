@@ -1,0 +1,140 @@
+<div class="container">
+  <div class="row my-4 mb-2">
+    <div class="col-12">
+      <h1 class="display-6">{{ 'Lecturer.Topics.Header' | translate }}</h1>
+    </div>
+  </div>
+
+  <div *ngIf="otherTheses" class="row my-3">
+    <div class="col-8">
+      <h5 class="mt-3 mb-3">{{ 'Lecturer.Topics.Label.Submitted' | translate }}</h5>
+    </div>
+    <div class="col-4 d-flex flex-row-reverse align-items-center">
+      <button class="btn btn-dark " [disabled]="!canSubmit" (click)="createTopic()">
+        {{ 'Button.Add' | translate }}
+      </button>
+    </div>
+
+    <div class="col-12">
+      <div class="table-header bg-dark">
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 45%" scope="col">{{ 'Table.Topic' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.NumberOfStudents' | translate }}</th>
+            <th style="width: 20%" scope="col">{{ 'Table.Status' | translate }}</th>
+            <th style="width: auto" class="action-col" scope="col">{{ 'Table.Actions' | translate }}</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-body">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let item of otherTheses">
+            <th style="width: 5%" scope="row">{{ item.id }}</th>
+            <td style="width: 45%">{{ item.topic }}</td>
+            <td style="width: 15%">{{ item.numberOfStudents }}</td>
+            <td style="width: 20%">{{ TranslationKeys.forThesisStatus(item.status) | translate }}</td>
+            <td style="width: auto" class="action-col">
+              <button (click)="manageTopic(item)" type="button" class="btn btn-primary">
+                {{ 'Button.Details' | translate }}
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!otherTheses.length" class="d-flex justify-content-center">
+          {{ 'Table.NoData' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-12">
+      <h5 class="mt-3 mb-3">{{ 'Lecturer.Topics.Label.StudentSuggestions' | translate }}</h5>
+    </div>
+
+    <div *ngIf="proposedTheses" class="col-12">
+      <div class="table-header bg-dark">
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 45%" scope="col">{{ 'Table.Topic' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.NumberOfStudents' | translate }}</th>
+            <th style="width: 20%" scope="col">{{ 'Table.SubmissionDate' | translate }}</th>
+            <th style="width: auto" class="action-col" scope="col">{{ 'Table.Actions' | translate }}</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-body">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let topic of proposedTheses">
+            <th style="width: 5%" scope="row">{{ topic.id }}</th>
+            <td style="width: 45%">{{ topic.topic }}</td>
+            <td style="width: 15%">{{ topic.numberOfStudents }}</td>
+            <td style="width: 20%">{{ topic.submissionDate | localDate }}</td>
+            <td style="width: auto" class="action-col">
+              <button (click)="reviewTopic(topic)" type="button" class="btn btn-primary">
+                {{ 'Button.Review' | translate }}
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!proposedTheses.length" class="d-flex justify-content-center">
+          {{ 'Table.NoData' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="toCorrectTheses" class="row mt-3 mb-5">
+    <div class="col-12">
+      <h5 class="mt-3 mb-3">{{ 'Lecturer.Topics.Label.ForCorrections' | translate }}</h5>
+    </div>
+
+    <div class="col-12">
+      <div class="table-header bg-dark">
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 45%" scope="col">{{ 'Table.Topic' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.NumberOfStudents' | translate }}</th>
+            <th style="width: 20%" scope="col">{{ 'Table.SubmissionDate' | translate }}</th>
+            <th style="width: auto" class="action-col" scope="col">{{ 'Table.Actions' | translate }}</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-body">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let topic of toCorrectTheses">
+            <th style="width: 5%" scope="row">{{ topic.id }}</th>
+            <td style="width: 45%">{{ topic.topic }}</td>
+            <td style="width: 15%">{{ topic.numberOfStudents }}</td>
+            <td style="width: 20%">{{ topic.submissionDate | localDate }}</td>
+            <td style="width: auto" class="action-col">
+              <button (click)="correctTopic(topic)" type="button" class="btn btn-primary">
+                {{ 'Button.Correct' | translate }}
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!toCorrectTheses.length" class="d-flex justify-content-center">
+          {{ 'Table.NoData' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

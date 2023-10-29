@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row my-4">
+    <h1 class="display-6">{{ 'ReservationDetails.Header' | translate }}</h1>
+  </div>
+
+  <div *ngIf="form && reservation" class="row py-3">
+    <app-error-alert *ngIf="isErrorVisible" class="my-2"></app-error-alert>
+    <form [formGroup]="form">
+      <fieldset disabled>
+        <div class="mb-3">
+          <label for="topic" class="form-label">{{ 'Form.Label.ThesisTopic' | translate }}</label>
+          <input type="text" formControlName="topic" id="topic" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="supervisorName" class="form-label">{{ 'Form.Label.Supervisor' | translate }}</label>
+          <input type="text" formControlName="supervisorName" id="supervisorName" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="diplomaSession" class="form-label">{{ 'Form.Label.DiplomaSession' | translate }}</label>
+          <input type="text" formControlName="diplomaSession" id="diplomaSession" class="form-control">
+        </div>
+        <div class="row">
+          <div class="col-7">
+            <label class="form-label">{{ 'Form.Label.Students' | translate }}</label>
+          </div>
+          <div class="col-5">
+            <label class="form-label">{{ 'Form.Label.Status' | translate }}</label>
+          </div>
+          <ng-container *ngFor="let member of reservation.reservationMembers">
+            <div class="col-7 mb-3">
+              <input type="text" class="form-control" [formControlName]="keyForMember(member)">
+            </div>
+            <div class="col-5 d-flex mb-3">
+              <b class="my-auto">{{ TranslationKeys.forReservationMemberStatus(member.status) | translate }}</b>
+            </div>
+          </ng-container>
+        </div>
+        <div class="mb-4">
+          <label for="description" class="form-label">{{ 'Form.Label.Description' | translate }}</label>
+          <textarea rows="5" formControlName="description" id="description" class="form-control"></textarea>
+        </div>
+      </fieldset>
+      <div class="gap-2 d-flex">
+        <h6 class="my-auto me-auto">
+          {{ 'Form.Label.Status' | translate }}:
+          <b>{{ TranslationKeys.forReservationStatus(reservation.status) | translate }}</b>
+        </h6>
+        <ng-container *ngIf="userRole?.role === Role.STUDENT">
+          <button type="button" class="btn btn-outline-danger"
+                  [disabled]="!canAbandonReservation()"
+                  (click)="abandonReservationAsMember()">
+            {{ 'Button.Abandon' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary"
+                  [disabled]="!canConfirmParticipation()"
+                  (click)="confirmParticipation()">
+            {{ 'Button.ConfirmParticipation' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary"
+                  [disabled]="!canStudentConfirmReservation()"
+                  (click)="confirmMemberReservation()">
+            {{ 'Button.ConfirmReservation' | translate }}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="userRole?.role === Role.LECTURER && reservation.status === ReservationStatus.SUBMITTED">
+          <button type="button" class="btn btn-outline-danger"
+                  (click)="rejectReservation()">
+            {{ 'Button.Reject' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary"
+                  (click)="acceptReservation()">
+            {{ 'Button.Approve' | translate }}
+          </button>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+
+</div>

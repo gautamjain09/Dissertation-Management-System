@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row my-4">
+    <h1 class="display-6">{{ 'DiplomaSectionMember.ModifyTimetable.Header' | translate }}</h1>
+  </div>
+  <div *ngIf="form" class="row py-3">
+    <app-error-alert *ngIf="isErrorVisible" class="my-2"></app-error-alert>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-6 my-3">
+          <label for="submitDeadline" class="form-label">{{ 'Form.Label.SubmitDeadline' | translate }}</label>
+          <input type="date" formControlName="submitDeadline" id="submitDeadline" class="form-control">
+          <app-validation-feedback [errors]="getErrors(form,'submitDeadline')"></app-validation-feedback>
+        </div>
+        <div class="col-6 my-3">
+          <label for="selectingDeadline" class="form-label">{{ 'Form.Label.SelectingDeadline' | translate }}</label>
+          <input type="date" formControlName="selectingDeadline" id="selectingDeadline" class="form-control">
+          <app-validation-feedback [errors]="getErrors(form,'selectingDeadline')"></app-validation-feedback>
+        </div>
+        <div class="col-6 my-3">
+          <label for="approvingCoordinatorDeadline" class="form-label">
+            {{ 'Form.Label.ApprovingCoordinatorDeadline' | translate }}
+          </label>
+          <input type="date" formControlName="approvingCoordinatorDeadline" id="approvingCoordinatorDeadline"
+                 class="form-control">
+          <app-validation-feedback [errors]="getErrors(form,'approvingCoordinatorDeadline')"></app-validation-feedback>
+        </div>
+        <div class="col-6 my-3">
+          <label for="approvingCommitteeDeadline" class="form-label">
+            {{ 'Form.Label.ApprovingCommitteeDeadline' | translate }}
+          </label>
+          <input type="date" formControlName="approvingCommitteeDeadline" id="approvingCommitteeDeadline"
+                 class="form-control">
+          <app-validation-feedback [errors]="getErrors(form,'approvingCommitteeDeadline')"></app-validation-feedback>
+        </div>
+        <div class="col-6 my-3">
+          <label for="clarificationsDeadline" class="form-label">
+            {{ 'Form.Label.ClarificationsDeadline' | translate }}
+          </label>
+          <input type="date" formControlName="clarificationsDeadline" id="clarificationsDeadline" class="form-control">
+          <app-validation-feedback [errors]="getErrors(form,'clarificationsDeadline')"></app-validation-feedback>
+        </div>
+        <div class="col-6 my-3">
+          <label for="changingDeadline" class="form-label">{{ 'Form.Label.ChangingDeadline' | translate }}</label>
+          <input type="date" formControlName="changingDeadline" id="changingDeadline" class="form-control">
+          <app-validation-feedback [errors]="getErrors(form,'changingDeadline')"></app-validation-feedback>
+        </div>
+      </div>
+      <div class="mt-4 gap-2 d-flex justify-content-end">
+        <button type="button" class="btn btn-primary"
+                [disabled]="form.invalid"
+                (click)="modify()">
+          {{ 'Button.Approve' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

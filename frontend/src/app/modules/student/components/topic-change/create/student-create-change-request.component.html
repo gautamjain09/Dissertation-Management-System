@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row my-4">
+    <h1 class="display-6">{{ 'Student.TopicChangeCreate.Header' | translate }}</h1>
+  </div>
+
+  <div *ngIf="baseThesis" class="row py-3">
+    <app-error-alert *ngIf="errorVisible"></app-error-alert>
+    <form *ngIf="form" [formGroup]="form">
+      <div class="mb-3">
+        <label [for]="FORM_KEY.TOPIC" class="form-label">{{ 'Form.Label.ThesisTopic' | translate }}</label>
+        <input type="text" [formControlName]="FORM_KEY.TOPIC" [id]="FORM_KEY.TOPIC" class="form-control">
+        <app-validation-feedback [errors]="getErrors(form, FORM_KEY.TOPIC)"></app-validation-feedback>
+      </div>
+      <div class="mb-3">
+        <label [for]="FORM_KEY.SUPERVISOR_ID" class="form-label">{{ 'Form.Label.Supervisor' | translate }}</label>
+        <select [formControlName]="FORM_KEY.SUPERVISOR_ID" [id]="FORM_KEY.SUPERVISOR_ID" class="form-control">
+          <option *ngFor="let item of supervisors" [value]="item.id">{{ LabelBuilder.forEmployee(item) }}</option>
+        </select>
+        <app-validation-feedback [errors]="getErrors(form, FORM_KEY.SUPERVISOR_ID)"></app-validation-feedback>
+      </div>
+      <div class="mb-4">
+        <label [for]="FORM_KEY.DESCRIPTION" class="form-label">{{ 'Form.Label.Description' | translate }}</label>
+        <textarea rows="5" [formControlName]="FORM_KEY.DESCRIPTION" [id]="FORM_KEY.DESCRIPTION"
+                  class="form-control"></textarea>
+        <app-validation-feedback [errors]="getErrors(form, FORM_KEY.DESCRIPTION)"></app-validation-feedback>
+      </div>
+      <div class="gap-2 d-flex justify-content-end">
+        <button
+          type="submit" class="btn btn-success"
+          [disabled]="!form!.valid"
+          (click)="confirm()">
+          {{ 'Button.Approve' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

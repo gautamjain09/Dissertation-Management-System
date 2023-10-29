@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row pt-4 mt-5 justify-content-center">
+    <div class="pt-5 mt-5 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
+      <app-error-alert *ngIf="error"></app-error-alert>
+      <div class="card mx-auto">
+        <div class="card-header px-4 py-3">
+          <h4 class="card-title">{{ 'Login.Label' | translate }}</h4>
+        </div>
+        <div *ngIf="form" class="card-content px-2 py-3">
+          <div class="card-body">
+            <form class="form-group " [formGroup]="form">
+              <div class="mb-3">
+                <label for="username">{{ 'Login.Username' | translate }}</label>
+                <input type="text" class="form-control" id="username" formControlName="username">
+                <app-validation-feedback [errors]="getErrors(form,'username')"></app-validation-feedback>
+              </div>
+              <div class="mb-3">
+                <label for="password">{{ 'Login.Password' | translate }}</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+                <app-validation-feedback [errors]="getErrors(form,'password')"></app-validation-feedback>
+              </div>
+
+              <div>
+                <input type="checkbox" class="form-check-input">
+                <label class="ms-2 form-check-label">{{ 'Login.RememberMe' | translate }}</label>
+              </div>
+
+              <button type="submit" class="btn btn-sm btn-outline-dark btn-min-width my-2 float-end  btn-ready"
+                      [disabled]="form.invalid" (click)="login()">
+                {{ 'Login.Label' | translate }}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

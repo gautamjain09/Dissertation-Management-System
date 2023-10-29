@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="row my-4">
+    <h1 class="display-6">{{ headerKey | translate }}</h1>
+  </div>
+
+  <div *ngIf="form && thesis" class="row mb-3">
+    <app-error-alert *ngIf="isErrorVisible"></app-error-alert>
+    <app-warning-alert *ngIf="isWarningVisible(Role.STUDENT, canStudentReserve)" class="my-2"
+                       messageKey="Alert.Warning.Student.CannotCreateReservation">
+    </app-warning-alert>
+    <app-warning-alert *ngIf="isWarningVisible(Role.COORDINATOR, canCoordinatorConsiderThesis)" class="my-2"
+                       messageKey="Alert.Warning.Coordinator.CannotConsiderThesis">
+    </app-warning-alert>
+    <app-warning-alert *ngIf="isWarningVisible(Role.PROGRAM_COMMITTEE_MEMBER, canCommitteeMemberConsiderThesis)"
+                       class="my-2" messageKey="Alert.Warning.CommitteeMember.CannotConsiderThesis">
+    </app-warning-alert>
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="topic" class="form-label">{{ 'Form.Label.ThesisTopic' | translate }}</label>
+        <input type="text" formControlName="topic" id="topic" class="form-control">
+        <app-validation-feedback [errors]="getErrors(form,'topic')"></app-validation-feedback>
+      </div>
+      <div class="row mb-3">
+        <div class="col-7">
+          <label for="supervisorName" class="form-label">{{ 'Form.Label.Supervisor' | translate }}</label>
+          <input type="text" formControlName="supervisorName" id="supervisorName" class="form-control">
+          <app-validation-feedback [errors]="getErrors(form,'supervisorName')"></app-validation-feedback>
+        </div>
+        <div class="col-5">
+          <label for="numberOfStudents" class="form-label">{{ 'Form.Label.NumberOfStudents' | translate }}</label>
+          <input type="number" formControlName="numberOfStudents" id="numberOfStudents" class="form-control">
+          <app-validation-feedback [errors]="getErrors(form,'numberOfStudents')"></app-validation-feedback>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="diplomaSession" class="form-label">{{ 'Form.Label.DiplomaSession' | translate }}</label>
+        <input type="text" formControlName="diplomaSession" id="diplomaSession" class="form-control">
+        <app-validation-feedback [errors]="getErrors(form,'diplomaSession')"></app-validation-feedback>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">{{ 'Form.Label.Description' | translate }}</label>
+        <textarea rows="3" formControlName="description" id="description" class="form-control"></textarea>
+        <app-validation-feedback [errors]="getErrors(form,'description')"></app-validation-feedback>
+      </div>
+      <div *ngIf="isCoordinatorCommentVisible()" class="mb-4">
+        <label for="coordinatorComment" class="form-label">{{ 'Form.Label.CoordinatorComment' | translate }}</label>
+        <textarea rows="3" formControlName="coordinatorComment" id="coordinatorComment" class="form-control"></textarea>
+        <app-validation-feedback [errors]="getErrors(form,'coordinatorComment')"></app-validation-feedback>
+      </div>
+      <div class="gap-2 d-flex">
+        <h6 class="my-auto me-auto">
+          {{ 'Form.Label.Status' | translate }}:
+          <b>{{ TranslationKeys.forThesisStatus(thesis.status) | translate }}</b>
+        </h6>
+        <ng-container *ngIf="userRole?.role === Role.STUDENT">
+          <ng-container
+            *ngIf="userRole?.id === thesis.authorStudentId && thesis.status === ThesisStatus.PROPOSED_BY_STUDENT">
+            <button type="button" class="btn btn-outline-danger"
+                    (click)="deleteProposition()">
+              {{ 'Button.Delete' | translate }}
+            </button>
+          </ng-container>
+          <button type="button" class="btn btn-primary"
+                  [disabled]="!canStudentReserve"
+                  (click)="reserveTopic()">
+            {{ 'Button.Reserve' | translate }}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="userRole?.role === Role.COORDINATOR">
+          <button type="button" class="btn btn-outline-danger"
+                  [disabled]="!canCoordinatorConsiderThesis || form.invalid"
+                  (click)="rejectThesisWithCoordinator()">
+            {{ 'Button.Reject' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary"
+                  [disabled]="!canCoordinatorConsiderThesis || form.invalid"
+                  (click)="requestForThesisCorrectionsWithCoordinator()">
+            {{ 'Button.RequestForCorrections' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary"
+                  [disabled]="!canCoordinatorConsiderThesis"
+                  (click)="approveThesisWithCoordinator()">
+            {{ 'Button.Approve' | translate }}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="userRole?.role === Role.PROGRAM_COMMITTEE_MEMBER">
+          <button type="button" class="btn btn-outline-danger"
+                  [disabled]="!canCommitteeMemberConsiderThesis"
+                  (click)="rejectThesisWithCommitteeMember()">
+            {{ 'Button.Reject' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary"
+                  [disabled]="!canCommitteeMemberConsiderThesis"
+                  (click)="approveThesisWithCommitteeMember()">
+            {{ 'Button.Approve' | translate }}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="userRole?.role === Role.LECTURER">
+          <ng-container *ngIf="thesis.status ===ThesisStatus.TO_CORRECT || thesis.status ===ThesisStatus.WAITING">
+            <button type="button" class="btn btn-outline-danger"
+                    [disabled]="!canLecturerSubmit"
+                    (click)="rejectThesisWithLecturer()">
+              {{ 'Button.Reject' | translate }}
+            </button>
+            <button type="button" class="btn btn-primary"
+                    [disabled]="!canLecturerSubmit || form.invalid"
+                    (click)="correctThesisWithLecturer()">
+              {{ 'Button.Correct' | translate }}
+            </button>
+          </ng-container>
+          <ng-container *ngIf="thesis.status ===ThesisStatus.PROPOSED_BY_STUDENT">
+            <button type="button" class="btn btn-outline-danger"
+                    [disabled]="!canLecturerSubmit"
+                    (click)="rejectThesisWithLecturer()">
+              {{ 'Button.Reject' | translate }}
+            </button>
+            <button type="button" class="btn btn-primary"
+                    [disabled]="!canLecturerSubmit"
+                    (click)="acceptThesisWithLecturer()">
+              {{ 'Button.Approve' | translate }}
+            </button>
+          </ng-container>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row my-4">
+    <h1 class="display-6">{{ 'Admin.Notifications.Header' | translate }}</h1>
+  </div>
+
+  <div *ngIf="form && notifications && notifications.length > 0" class="row py-3">
+    <div class="col-12">
+      <app-error-alert *ngIf="isErrorVisible" class="my-2"></app-error-alert>
+      <div class="alert alert-secondary translation-white-spaces" role="alert">
+        {{ 'Alert.Info.CommitteeMember.CannotConsiderThesis' | translate}}
+      </div>
+    </div>
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label [for]="FORM_KEYS.TYPE" class="form-label">{{ 'Form.Label.NotificationType' | translate }}</label>
+        <select type="text" class="form-control" [formControlName]="FORM_KEYS.TYPE" [id]="FORM_KEYS.TYPE">
+          <option *ngFor="let notification of notifications" [value]="notification.label">
+            {{ TranslationKeys.forNotificationType(notification.label) | translate }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label [for]="FORM_KEYS.TYPE" class="form-label">{{ 'Form.Label.NotificationContent' | translate }}</label>
+        <textarea rows="6" class="form-control" [formControlName]="FORM_KEYS.CONTENT" [id]="FORM_KEYS.CONTENT">
+        </textarea>
+        <app-validation-feedback [errors]="getErrors(form, FORM_KEYS.CONTENT)"></app-validation-feedback>
+      </div>
+      <div class="gap-2 d-flex justify-content-end">
+        <button type="button" class="btn btn-success"
+                [disabled]="form.invalid"
+                (click)="confirmChange()">
+          {{ 'Button.Approve' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

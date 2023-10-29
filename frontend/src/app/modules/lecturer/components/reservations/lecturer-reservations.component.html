@@ -1,0 +1,172 @@
+<div class="container">
+  <div class="row my-4 mb-4">
+    <div class="col-12">
+      <h1 class="display-6">{{ 'Lecturer.Reservations.Header' | translate }}</h1>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-12">
+      <h5 class="mt-3 mb-3">{{ 'Lecturer.Reservations.Label.ToConsider' | translate }}</h5>
+    </div>
+
+    <div *ngIf="reservationsToConsider" class="col-12">
+      <div class="table-header bg-dark">
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 50%" scope="col">{{ 'Table.Topic' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.NumberOfStudents' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.Status' | translate }}</th>
+            <th style="width: auto" class="action-col" scope="col">{{ 'Table.Actions' | translate }}</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-body table-tall">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let item of reservationsToConsider">
+            <th style="width: 5%" scope="row">{{ item.thesis.id }}</th>
+            <td style="width: 50%">{{ item.thesis.topic }}</td>
+            <td style="width: 15%">{{ item.thesis.numberOfStudents }}</td>
+            <td style="width: 15%">{{ TranslationKeys.forReservationStatus(item.status) | translate }}</td>
+            <td style="width: auto" class="action-col">
+              <button (click)="manageTopicReservation(item)" type="button" class="btn btn-primary">
+                {{ 'Button.Manage' | translate }}
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!reservationsToConsider.length" class="d-flex justify-content-center">
+          {{ 'Table.NoData' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-12">
+      <h5 class="mt-3 mb-3">{{ 'Lecturer.Reservations.Label.Confirmed' | translate }}</h5>
+    </div>
+    <div *ngIf="reservationsConfirmed" class="col-12">
+      <div class="table-header bg-dark">
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 50%" scope="col">{{ 'Table.Topic' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.NumberOfStudents' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.Status' | translate }}</th>
+            <th style="width: auto" class="action-col" scope="col">{{ 'Table.Actions' | translate }}</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-body table-tall">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let item of reservationsConfirmed">
+            <th style="width: 5%" scope="row">{{ item.thesis.id }}</th>
+            <td style="width: 50%">{{ item.thesis.topic }}</td>
+            <td style="width: 15%">{{ item.thesis.numberOfStudents }}</td>
+            <td style="width: 15%">{{ TranslationKeys.forReservationStatus(item.status) | translate }}</td>
+            <td style="width: auto" class="action-col">
+              <button (click)="manageTopicReservation(item)" type="button" class="btn btn-primary">
+                {{ 'Button.Manage' | translate }}
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!reservationsConfirmed.length" class="d-flex justify-content-center">
+          {{ 'Table.NoData' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-12">
+      <h5 class="mt-3 mb-3">{{ 'Lecturer.Reservations.Label.Accepted' | translate }}</h5>
+    </div>
+    <div *ngIf="reservationsAccepted" class="col-12">
+      <div class="table-header bg-dark">
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 50%" scope="col">{{ 'Table.Topic' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.NumberOfStudents' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.Status' | translate }}</th>
+            <th style="width: auto" class="action-col" scope="col">{{ 'Table.Actions' | translate }}</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-body table-tall">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let item of reservationsAccepted">
+            <th style="width: 5%" scope="row">{{ item.thesis.id }}</th>
+            <td style="width: 50%">{{ item.thesis.topic }}</td>
+            <td style="width: 15%">{{ item.thesis.numberOfStudents }}</td>
+            <td style="width: 15%">{{ TranslationKeys.forReservationStatus(item.status) | translate }}</td>
+            <td style="width: auto" class="action-col">
+              <button (click)="manageTopicReservation(item)" type="button" class="btn btn-primary">
+                {{ 'Button.Manage' | translate }}
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!reservationsAccepted.length" class="d-flex justify-content-center">
+          {{ 'Table.NoData' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-12">
+      <h5 class="mt-3 mb-3">{{ 'Lecturer.Reservations.Label.Others' | translate }}</h5>
+    </div>
+    <div *ngIf="reservationsOther" class="col-12">
+      <div class="table-header bg-dark">
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 50%" scope="col">{{ 'Table.Topic' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.NumberOfStudents' | translate }}</th>
+            <th style="width: 15%" scope="col">{{ 'Table.Status' | translate }}</th>
+            <th style="width: auto" class="action-col" scope="col">{{ 'Table.Actions' | translate }}</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-body table-tall">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let item of reservationsOther">
+            <th style="width: 5%" scope="row">{{ item.thesis.id }}</th>
+            <td style="width: 50%">{{ item.thesis.topic }}</td>
+            <td style="width: 15%">{{ item.thesis.numberOfStudents }}</td>
+            <td style="width: 15%">{{ TranslationKeys.forReservationStatus(item.status) | translate }}</td>
+            <td style="width: auto" class="action-col">
+              <button (click)="manageTopicReservation(item)" type="button" class="btn btn-primary">
+                {{ 'Button.Manage' | translate }}
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!reservationsOther.length" class="d-flex justify-content-center">
+          {{ 'Table.NoData' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

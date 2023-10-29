@@ -1,0 +1,40 @@
+<nav class="row header-height navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <img src="assets/img/logo.png" class="ms-2 header-logo">
+    <span class="ms-3 h4 my-auto me-auto">{{ 'App.Name' | translate | uppercase }}</span>
+
+    <ng-container *ngIf="selectedUserRole?.role !== Role.ADMIN">
+
+      <div *ngIf="fieldsOfStudy && diplomaSessions" class=" me-3">
+        <select [formControl]="diplomaSessionContextControl" class="d-flex form-select">
+          <option *ngFor="let item of diplomaSessions" [ngValue]="item.id">
+            {{ fieldsOfStudy.length > 1 ? item.year : LabelBuilder.forDiplomaSession(item) }}
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="fieldsOfStudy && fieldsOfStudy.length > 1" class="me-3">
+        <select [formControl]="fieldOfStudyContextControl" class="d-flex form-select">
+          <option *ngFor="let item of fieldsOfStudy" [ngValue]="item.id">
+            {{ LabelBuilder.forFieldOfStudy(item) }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+
+    <div *ngIf="userRoles" class=" me-3">
+      <select [formControl]="roleContextControl" class="d-flex form-select">
+        <option *ngFor="let role of userRoles" [ngValue]="roleToId(role)">
+          {{ TranslationKeys.forRole(role.role) | translate }} {{ '(' + role.id + ')' }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <select [formControl]="languageControl" class="d-flex form-select">
+        <option [value]="AppLanguage.POLISH">Polski</option>
+        <option [value]="AppLanguage.ENGLISH">English</option>
+      </select>
+    </div>
+  </div>
+</nav>

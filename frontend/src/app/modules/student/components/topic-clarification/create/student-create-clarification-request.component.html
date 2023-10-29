@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row my-4">
+    <h1 class="display-6">{{ 'Student.TopicClarificationCreate.Header' | translate }}</h1>
+  </div>
+
+  <div *ngIf="thesis" class="row py-3">
+    <app-error-alert *ngIf="errorVisible"></app-error-alert>
+    <form *ngIf="form" [formGroup]="form">
+      <fieldset disabled>
+        <div class="mb-3">
+          <label [for]="FORM_KEY.CURRENT_THESIS_TOPIC" class="form-label">
+            {{ 'Form.Label.CurrentThesisTopic' | translate }}
+          </label>
+          <input type="text" class="form-control"
+                 [formControlName]="FORM_KEY.CURRENT_THESIS_TOPIC"
+                 [id]="FORM_KEY.CURRENT_THESIS_TOPIC">
+        </div>
+        <div class="mb-4">
+          <label [for]="FORM_KEY.CURRENT_DESCRIPTION" class="form-label">
+            {{ 'Form.Label.CurrentDescription' | translate }}
+          </label>
+          <textarea rows="5" class="form-control"
+                    [formControlName]="FORM_KEY.CURRENT_DESCRIPTION"
+                    [id]="FORM_KEY.CURRENT_DESCRIPTION">
+          </textarea>
+        </div>
+      </fieldset>
+      <div class="mb-3">
+        <label [for]="FORM_KEY.NEW_THESIS_TOPIC" class="form-label">
+          {{ 'Form.Label.NewThesisTopic' | translate }}
+        </label>
+        <input type="text" class="form-control"
+               [formControlName]="FORM_KEY.NEW_THESIS_TOPIC"
+               [id]="FORM_KEY.NEW_THESIS_TOPIC"
+               [class.is-invalid]="getErrors(form, FORM_KEY.NEW_THESIS_TOPIC)">
+        <app-validation-feedback [errors]="getErrors(form, FORM_KEY.NEW_THESIS_TOPIC)"></app-validation-feedback>
+      </div>
+      <div class="mb-4">
+        <label [for]="FORM_KEY.NEW_DESCRIPTION" class="form-label">
+          {{ 'Form.Label.NewDescription' | translate }}
+        </label>
+        <textarea rows="5" class="form-control"
+                  [formControlName]="FORM_KEY.NEW_DESCRIPTION"
+                  [id]="FORM_KEY.NEW_DESCRIPTION"
+                  [class.is-invalid]="getErrors(form, FORM_KEY.NEW_DESCRIPTION)">
+        </textarea>
+        <app-validation-feedback [errors]="getErrors(form,FORM_KEY.NEW_DESCRIPTION)"></app-validation-feedback>
+      </div>
+      <div class="gap-2 d-flex justify-content-end">
+        <button
+          type="submit" class="btn btn-success"
+          [disabled]="!form!.valid"
+          (click)="confirm()">
+          {{ 'Button.Approve' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

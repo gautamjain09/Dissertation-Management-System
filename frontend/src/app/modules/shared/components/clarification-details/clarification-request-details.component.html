@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row my-4">
+    <h1 class="display-6">{{ 'Student.TopicClarificationDetails.Header' | translate }}</h1>
+  </div>
+
+  <div *ngIf="form && request" class="row py-3">
+    <app-error-alert *ngIf="isErrorVisible" class="my-2"></app-error-alert>
+    <form [formGroup]="form">
+      <fieldset disabled>
+        <div class="mb-3">
+          <label for="currentThesisTopic"
+                 class="form-label">{{ 'Form.Label.CurrentThesisTopic' | translate }}</label>
+          <input type="text" formControlName="currentThesisTopic" id="currentThesisTopic" class="form-control">
+        </div>
+        <div class="mb-4">
+          <label for="currentDescription"
+                 class="form-label">{{ 'Form.Label.CurrentDescription' | translate }}</label>
+          <textarea rows="5" formControlName="currentDescription" id="currentDescription"
+                    class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="newThesisTopic"
+                 class="form-label">{{ 'Form.Label.NewThesisTopic' | translate }}</label>
+          <input type="text" formControlName="newThesisTopic" id="newThesisTopic" class="form-control">
+        </div>
+        <div class="mb-4">
+          <label for="newDescription"
+                 class="form-label">{{ 'Form.Label.NewDescription' | translate }}</label>
+          <textarea rows="5" formControlName="newDescription" id="newDescription" class="form-control"></textarea>
+        </div>
+      </fieldset>
+      <div class="gap-2 d-flex">
+        <h6 class="my-auto me-auto">
+          {{ 'Form.Label.Status' | translate }}:
+          <b>{{ TranslationKeys.forRequestStatus(request.status) | translate }}</b>
+        </h6>
+        <ng-container *ngIf="userRole?.role === Role.DEAN">
+          <button type="submit" class="btn btn-outline-danger"
+                  [class.disabled]="!canDeanConsiderRequest"
+                  (click)="rejectRequest()">
+            {{ 'Button.Reject' | translate }}
+          </button>
+          <button type="submit" class="btn btn-success"
+                  [class.disabled]="!canDeanConsiderRequest"
+                  (click)="approveRequest()">
+            {{ 'Button.Approve' | translate }}
+          </button>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+
+</div>

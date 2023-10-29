@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+.header-height {
+  min-height: 8vh;
+}
+
+.header-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.content-height {
+  min-height: 92vh;
+}
+
+div.table-header {
+  padding-left: 16px;
+  padding-right: 32px;
+}
+
+div.table-header table {
+  margin-bottom: 0;
+  width: 100%;
+}
+
+div.table-header tr {
+  vertical-align: middle;
+}
+
+div.table-header th.action-col {
+  padding-right: 16px;
+  text-align: end;
+}
+
+div.table-body {
+  overflow-y: auto;
+  max-height: 30vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.3rem;
+}
+
+div.table-body.table-tall {
+  max-height: 48vh;
+}
+
+div.table-body table {
+  width: 100%;
+}
+
+div.table-body td.action-col button {
+  float: right;
+  margin-left: 4px;
+  margin-bottom: 1px;
+}
+
+.icon {
+  font-size: 1.6rem;
+}
+
+.translation-white-spaces {
+  white-space: pre-wrap;
+}

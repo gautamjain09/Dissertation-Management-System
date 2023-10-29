@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row my-4">
+    <div class="col-12">
+      <h1 class="display-6">{{ 'Student.TopicClarification.Header' | translate }}</h1>
+    </div>
+  </div>
+
+  <div *ngIf="clarificationRequests" class="row mt-3 mb-5">
+    <app-warning-alert *ngIf="!(canCreateNew ?? true)" messageKey="Alert.Warning.Student.CannotCreateRequest">
+    </app-warning-alert>
+
+    <div class="col-8">
+      <h5 class="mt-3 mb-3">{{ 'Student.TopicClarification.Label.YourClarificationRequests' | translate }}</h5>
+    </div>
+    <div class="col-4 d-flex flex-row-reverse align-items-center">
+      <button class="btn btn-dark " [class.disabled]="!canCreateNew" (click)="createRequest()">
+        {{ 'Button.Create' | translate }}
+      </button>
+    </div>
+
+    <div class="col-12">
+      <div class="table-header bg-dark">
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 45%" scope="col">{{ 'Table.NewTopic' | translate }}</th>
+            <th style="width: 20%" scope="col">{{ 'Table.Supervisor' | translate }}</th>
+            <th style="width: 20%" scope="col">{{ 'Table.Status' | translate }}</th>
+            <th style="width: auto" class="action-col" scope="col">{{ 'Table.Actions' | translate }}</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="table-body table-tall">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let item of clarificationRequests">
+            <th style="width: 5%" scope="row">{{ item.id }}</th>
+            <td style="width: 45%">{{ item.baseThesis.topic }}</td>
+            <td style="width: 20%">{{ LabelBuilder.forEmployee(item.baseThesis.supervisor) }}</td>
+            <td style="width: 20%">{{ TranslationKeys.forRequestStatus(item.status) | translate }}</td>
+            <td style="width: auto" class="action-col">
+              <button (click)="requestDetails(item)" type="button" class=" btn btn-primary">
+                {{ 'Button.Details' | translate }}
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!clarificationRequests.length" class="d-flex justify-content-center">
+          {{ 'Table.NoData' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
